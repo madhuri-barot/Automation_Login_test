@@ -12,7 +12,7 @@ public class LoginTest {
         WebDriver driver = new ChromeDriver();
         driver.get("https://www.google.com/");
         String title = driver.getTitle();
-        Assert.assertTrue(title.contains("Google"));
+        Assert.assertTrue(driver.getTitle().contains("Yahoo"));
         driver.quit();
     }
 }
