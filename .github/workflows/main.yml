@@ -2,9 +2,11 @@ name: Maven Test
 
 on:
   push:
-    branches: [main]
+    branches:
+      - main
   pull_request:
-    branches: [main]
+    branches:
+      - main
 
 jobs:
   build:
@@ -33,21 +35,21 @@ jobs:
           wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
           sudo apt install -y ./google-chrome-stable_current_amd64.deb
 
-    - name: Install ChromeDriver (version-matched)
-  run: |
-    CHROME_VERSION=$(google-chrome --version | grep -oP '\d+\.\d+\.\d+' | head -1)
-    MAJOR_VERSION=$(echo $CHROME_VERSION | cut -d '.' -f 1)
-    DRIVER_VERSION=$(curl -s "https://chromedriver.storage.googleapis.com/LATEST_RELEASE_${MAJOR_VERSION}")
-    
-    if [ -z "$DRIVER_VERSION" ]; then
-      echo "❌ Failed to fetch ChromeDriver version for Chrome $MAJOR_VERSION"
-      exit 1
-    fi
+      - name: Install ChromeDriver (version-matched)
+        run: |
+          CHROME_VERSION=$(google-chrome --version | grep -oP '\d+\.\d+\.\d+' | head -1)
+          MAJOR_VERSION=$(echo $CHROME_VERSION | cut -d '.' -f 1)
+          DRIVER_VERSION=$(curl -s "https://chromedriver.storage.googleapis.com/LATEST_RELEASE_${MAJOR_VERSION}")
+          
+          if [ -z "$DRIVER_VERSION" ]; then
+            echo "❌ Failed to fetch ChromeDriver version for Chrome $MAJOR_VERSION"
+            exit 1
+          fi
 
-    wget "https://chromedriver.storage.googleapis.com/${DRIVER_VERSION}/chromedriver_linux64.zip"
-    unzip chromedriver_linux64.zip
-    sudo mv chromedriver /usr/bin/chromedriver
-    sudo chmod +x /usr/bin/chromedriver
+          wget "https://chromedriver.storage.googleapis.com/${DRIVER_VERSION}/chromedriver_linux64.zip"
+          unzip chromedriver_linux64.zip
+          sudo mv chromedriver /usr/bin/chromedriver
+          sudo chmod +x /usr/bin/chromedriver
 
       - name: Run tests with Maven
         run: mvn clean test
