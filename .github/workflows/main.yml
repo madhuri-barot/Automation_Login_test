@@ -30,35 +30,25 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-maven-
 
-      - name: Install Google Chrome
+      - name: Install Google Chrome (stable version)
         run: |
+          # Install a stable version of Chrome (e.g., version 115)
           wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
           sudo apt install -y ./google-chrome-stable_current_amd64.deb
 
-      - name: Install ChromeDriver (version-matched)
+      - name: Install ChromeDriver (stable version matching Chrome)
         run: |
-          # Get the installed Chrome version
-          CHROME_VERSION=$(google-chrome --version | grep -oP '\d+\.\d+\.\d+' | head -1)
-          echo "Detected Chrome version: $CHROME_VERSION"
-          
-          # Extract the major version from the Chrome version
-          MAJOR_VERSION=$(echo $CHROME_VERSION | cut -d '.' -f 1)
-          echo "Major Chrome version: $MAJOR_VERSION"
-          
-          # Fetch the corresponding ChromeDriver version
-          DRIVER_VERSION=$(curl -s "https://chromedriver.storage.googleapis.com/LATEST_RELEASE_${MAJOR_VERSION}")
-          echo "Fetched ChromeDriver version: $DRIVER_VERSION"
+          # Explicitly install ChromeDriver for Chrome version 114 or 115
+          DRIVER_VERSION=$(curl -s "https://chromedriver.storage.googleapis.com/LATEST_RELEASE_115")
+          echo "Using ChromeDriver version: $DRIVER_VERSION"
 
-          # If no driver version found, try to fetch the latest stable release of ChromeDriver
           if [ -z "$DRIVER_VERSION" ]; then
-            echo "❌ Failed to fetch ChromeDriver version for Chrome $MAJOR_VERSION, falling back to the latest release"
-            DRIVER_VERSION=$(curl -s "https://chromedriver.storage.googleapis.com/LATEST_RELEASE")
-            echo "Fetched Latest ChromeDriver version: $DRIVER_VERSION"
+            echo "❌ Failed to fetch ChromeDriver version 115, trying version 114"
+            DRIVER_VERSION=$(curl -s "https://chromedriver.storage.googleapis.com/LATEST_RELEASE_114")
           fi
 
-          # Handle if no version is found after fallback
           if [ -z "$DRIVER_VERSION" ]; then
-            echo "❌ Failed to fetch any ChromeDriver version"
+            echo "❌ Failed to fetch ChromeDriver for both 114 and 115"
             exit 1
           fi
 
