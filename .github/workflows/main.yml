@@ -49,9 +49,16 @@ jobs:
           DRIVER_VERSION=$(curl -s "https://chromedriver.storage.googleapis.com/LATEST_RELEASE_${MAJOR_VERSION}")
           echo "Fetched ChromeDriver version: $DRIVER_VERSION"
 
-          # Handle if no version is found
+          # If no driver version found, try to fetch the latest stable release of ChromeDriver
           if [ -z "$DRIVER_VERSION" ]; then
-            echo "❌ Failed to fetch ChromeDriver version for Chrome $MAJOR_VERSION"
+            echo "❌ Failed to fetch ChromeDriver version for Chrome $MAJOR_VERSION, falling back to the latest release"
+            DRIVER_VERSION=$(curl -s "https://chromedriver.storage.googleapis.com/LATEST_RELEASE")
+            echo "Fetched Latest ChromeDriver version: $DRIVER_VERSION"
+          fi
+
+          # Handle if no version is found after fallback
+          if [ -z "$DRIVER_VERSION" ]; then
+            echo "❌ Failed to fetch any ChromeDriver version"
             exit 1
           fi
 
