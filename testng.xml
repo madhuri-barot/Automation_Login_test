@@ -1,0 +1,11 @@
+<suite name="Test Suite" verbose="1">
+    <listeners>
+        <listener class-name="com.test.listeners.CustomTestListener"/>
+    </listeners>
+
+    <test name="Login Test">
+        <classes>
+            <class name="com.test.LoginTest"/>
+        </classes>
+    </test>
+</suite>
