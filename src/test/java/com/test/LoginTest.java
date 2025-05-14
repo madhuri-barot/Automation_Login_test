@@ -1,6 +1,6 @@
 package com.test;
-import io.github.bonigarcia.wdm.WebDriverManager;
 
+import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -24,7 +24,8 @@ public class LoginTest {
         options.addArguments("--disable-dev-shm-usage");
         driver = new ChromeDriver(options);
     }
-  @Test(priority = 1)
+
+    @Test(priority = 1)
     public void testValidLogin() {
         WebElement usernameField = driver.findElement(By.id("txtUsername"));
         usernameField.sendKeys("admin");
@@ -35,19 +36,16 @@ public class LoginTest {
         WebElement loginButton = driver.findElement(By.xpath("//button[@class='btn btn-primary']"));
         loginButton.click();
 
-        // Add a simple wait or better use WebDriverWait for better handling of the page load
         try {
-            Thread.sleep(3000); // Replace with WebDriverWait in real implementation
+            Thread.sleep(3000); // Replace with WebDriverWait
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
 
-        // Check if the page title or a specific element confirms login success
         String pageTitle = driver.getTitle();
         Assert.assertEquals(pageTitle, "Dashboard - Trulife Admin Portal", "Login failed - Title mismatch");
     }
 
-    // 2. Invalid Username Test
     @Test(priority = 2)
     public void testInvalidUsername() {
         WebElement usernameField = driver.findElement(By.id("txtUsername"));
@@ -65,11 +63,10 @@ public class LoginTest {
             e.printStackTrace();
         }
 
-        WebElement errorMessage = driver.findElement(By.id("error-message-id")); // Adjust ID based on actual page
+        WebElement errorMessage = driver.findElement(By.id("error-message-id")); 
         Assert.assertTrue(errorMessage.isDisplayed(), "Error message not displayed for invalid username");
     }
 
-    // 3. Invalid Password Test
     @Test(priority = 3)
     public void testInvalidPassword() {
         WebElement usernameField = driver.findElement(By.id("txtUsername"));
@@ -87,11 +84,10 @@ public class LoginTest {
             e.printStackTrace();
         }
 
-        WebElement errorMessage = driver.findElement(By.id("error-message-id")); // Adjust ID based on actual page
+        WebElement errorMessage = driver.findElement(By.id("error-message-id"));
         Assert.assertTrue(errorMessage.isDisplayed(), "Error message not displayed for invalid password");
     }
 
-    // 4. Empty Username and Password Test
     @Test(priority = 4)
     public void testEmptyUsernameAndPassword() {
         WebElement usernameField = driver.findElement(By.id("txtUsername"));
@@ -109,11 +105,10 @@ public class LoginTest {
             e.printStackTrace();
         }
 
-        WebElement errorMessage = driver.findElement(By.id("error-message-id")); // Adjust ID based on actual page
+        WebElement errorMessage = driver.findElement(By.id("error-message-id")); 
         Assert.assertTrue(errorMessage.isDisplayed(), "Error message not displayed for empty fields");
     }
 
-    // 5. Login Button Disabled on Empty Fields
     @Test(priority = 5)
     public void testLoginButtonDisabled() {
         WebElement usernameField = driver.findElement(By.id("txtUsername"));
@@ -126,7 +121,6 @@ public class LoginTest {
         Assert.assertFalse(loginButton.isEnabled(), "Login button should be disabled when fields are empty");
     }
 
-    // 6. Special Characters in Username/Password Test
     @Test(priority = 6)
     public void testSpecialCharacters() {
         WebElement usernameField = driver.findElement(By.id("txtUsername"));
@@ -148,7 +142,6 @@ public class LoginTest {
         Assert.assertEquals(pageTitle, "Dashboard - Trulife Admin Portal", "Login failed with special characters");
     }
 
-    
     @AfterClass
     public void tearDown() {
         if (driver != null) {
