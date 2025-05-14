@@ -1,4 +1,5 @@
 package com.test;
+import io.github.bonigarcia.wdm.WebDriverManager;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -15,6 +16,7 @@ public class LoginTest {
 
     @BeforeClass
     public void setUp() {
+        WebDriverManager.chromedriver().setup();
         ChromeOptions options = new ChromeOptions();
         options.addArguments("--headless");  // Required for GitHub Actions
         options.addArguments("--no-sandbox");
