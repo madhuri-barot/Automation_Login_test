@@ -23,11 +23,18 @@
             <version>7.9.0</version>
             <scope>test</scope>
         </dependency>
+
+        <!-- WebDriverManager -->
+        <dependency>
+            <groupId>io.github.bonigarcia</groupId>
+            <artifactId>webdrivermanager</artifactId>
+            <version>5.8.0</version>
+        </dependency>
     </dependencies>
 
     <build>
         <plugins>
-            <!-- Surefire Plugin (no suiteXmlFiles block) -->
+            <!-- Surefire Plugin to run TestNG tests -->
             <plugin>
                 <artifactId>maven-surefire-plugin</artifactId>
                 <version>3.0.0</version>
