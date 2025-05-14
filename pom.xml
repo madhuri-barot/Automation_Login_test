@@ -9,10 +9,8 @@
     <artifactId>Automation_Login_test</artifactId>
     <version>1.0-SNAPSHOT</version>
 
-    <!-- Define the packaging type -->
     <packaging>jar</packaging>
 
-    <!-- Properties for managing versions -->
     <properties>
         <selenium.version>4.21.0</selenium.version>
         <testng.version>7.9.0</testng.version>
@@ -63,10 +61,7 @@
                 <artifactId>maven-surefire-plugin</artifactId>
                 <version>3.0.0</version>
                 <configuration>
-                    <!-- Specify the TestNG suite XML file -->
-                    <suiteXmlFiles>
-                        <suiteXmlFile>testng.xml</suiteXmlFile>
-                    </suiteXmlFiles>
+                    <!-- No need to reference testng.xml if not using -->
                 </configuration>
             </plugin>
         </plugins>
