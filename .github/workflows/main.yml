@@ -16,7 +16,7 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
-      - name: Set up JDK 11
+      - name: Set up JDK 11 (or your desired JDK version)
         uses: actions/setup-java@v2
         with:
           distribution: 'temurin'
@@ -36,22 +36,10 @@ jobs:
           wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
           sudo apt install -y ./google-chrome-stable_current_amd64.deb
 
-      - name: Install ChromeDriver dynamically
+      - name: Set up WebDriverManager for ChromeDriver
         run: |
-          # Fetch the latest stable ChromeDriver version dynamically
-          CHROME_DRIVER_VERSION=$(curl -s https://chromedriver.storage.googleapis.com/LATEST_RELEASE)
-          echo "Using ChromeDriver version: $CHROME_DRIVER_VERSION"
-
-          if [ -z "$CHROME_DRIVER_VERSION" ]; then
-            echo "❌ Failed to fetch the latest ChromeDriver version"
-            exit 1
-          fi
-
-          # Download and install the correct version of ChromeDriver
-          wget "https://chromedriver.storage.googleapis.com/${CHROME_DRIVER_VERSION}/chromedriver_linux64.zip"
-          unzip chromedriver_linux64.zip
-          sudo mv chromedriver /usr/bin/chromedriver
-          sudo chmod +x /usr/bin/chromedriver
+          # Ensure WebDriverManager is properly set up (no need to manually download ChromeDriver)
+          echo "WebDriverManager will automatically handle the correct version of ChromeDriver"
 
       - name: Run tests with Maven
         run: mvn clean test
