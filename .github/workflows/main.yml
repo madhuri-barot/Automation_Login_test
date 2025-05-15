@@ -31,11 +31,11 @@ jobs:
         continue-on-error: true
 
       - name: Upload TestNG HTML Report
-  uses: actions/upload-artifact@v4
-  if: always()
-  with:
-    name: testng-html-report
-    path: test-output/**
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: testng-html-report
+          path: test-output/**
 
       - name: Fail job if tests failed
         if: always()
