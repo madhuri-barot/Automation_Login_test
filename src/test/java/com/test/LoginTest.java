@@ -37,10 +37,10 @@ public class LoginTest {
             throw new SkipException("Skipping test due to prior test failure.");
         }
 
-        WebElement usernameField = driver.findElement(By.id("txtUsername"));
+        WebElement usernameField = driver.findElement(By.xpath("//input[@id='txtUsername']"));
         usernameField.sendKeys("admin");
 
-        WebElement passwordField = driver.findElement(By.id("txtPassword"));
+        WebElement passwordField = driver.findElement(By.xpath("//input[@id='txtPassword']"));
         passwordField.sendKeys("12345678");
 
         WebElement loginButton = driver.findElement(By.xpath("//button[@class='btn btn-primary']"));
