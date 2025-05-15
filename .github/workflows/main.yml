@@ -30,12 +30,12 @@ jobs:
         run: mvn test
         continue-on-error: true
 
-      - name: Upload TestNG Reports
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: testng-reports
-          path: target/surefire-reports/
+      - name: Upload HTML Report
+  uses: actions/upload-artifact@v4
+  if: always()
+  with:
+    name: html-report
+    path: reports/**  # or the exact path to your HTML files
 
       - name: Fail job if tests failed
         if: always()
