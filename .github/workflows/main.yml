@@ -31,11 +31,11 @@ jobs:
         continue-on-error: true
 
       - name: Upload HTML Report
-  uses: actions/upload-artifact@v4
-  if: always()
-  with:
-    name: html-report
-    path: reports/**  # or the exact path to your HTML files
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: html-report
+          path: C:\Users\MadhuriBarot\Downloads\Report 
 
       - name: Fail job if tests failed
         if: always()
