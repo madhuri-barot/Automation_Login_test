@@ -30,12 +30,12 @@ jobs:
         run: mvn test
         continue-on-error: true
 
-      - name: Upload HTML Report
-        uses: actions/upload-artifact@v4
-        if: always()
-        with:
-          name: html-report
-          path: C:\Users\MadhuriBarot\Downloads\Report 
+      - name: Upload TestNG HTML Report
+  uses: actions/upload-artifact@v4
+  if: always()
+  with:
+    name: testng-html-report
+    path: test-output/**
 
       - name: Fail job if tests failed
         if: always()
