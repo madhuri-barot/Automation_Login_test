@@ -2,21 +2,19 @@ name: Maven Test
 
 on:
   push:
-    branches:
-      - main
+    branches: [main]
   pull_request:
-    branches:
-      - main
+    branches: [main]
 
 jobs:
-  build:
+  test:
     runs-on: ubuntu-latest
 
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
 
-      - name: Set up JDK 11 (or your desired JDK version)
+      - name: Set up JDK 11
         uses: actions/setup-java@v2
         with:
           distribution: 'temurin'
@@ -32,17 +30,26 @@ jobs:
 
       - name: Install Google Chrome (stable version)
         run: |
-          # Install the stable version of Google Chrome
           wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
           sudo apt install -y ./google-chrome-stable_current_amd64.deb
 
-      - name: Set up WebDriverManager for ChromeDriver
-        run: |
-          # Ensure WebDriverManager is properly set up (no need to manually download ChromeDriver)
-          echo "WebDriverManager will automatically handle the correct version of ChromeDriver"
+      - name: Run tests (do not fail build on test failures)
+        run: mvn test
+        continue-on-error: true
 
-      - name: Run tests with Maven
-        run: mvn clean test
-        env:
-          CHROME_BIN: /usr/bin/google-chrome
-          HEADLESS: true
+      - name: Upload TestNG Reports
+        if: always()
+        uses: actions/upload-artifact@v2
+        with:
+          name: testng-reports
+          path: target/surefire-reports/
+
+      - name: Fail job if tests failed
+        if: always()
+        run: |
+          if grep -q "<failure" target/surefire-reports/*.xml || grep -q "<error" target/surefire-reports/*.xml; then
+            echo "Some tests failed."
+            exit 1
+          else
+            echo "All tests passed."
+          fi
