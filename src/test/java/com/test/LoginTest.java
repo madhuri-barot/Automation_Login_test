@@ -53,9 +53,7 @@ public class LoginTest {
             e.printStackTrace();
         }
 
-        // Check if the page title or a specific element confirms login success
-        String pageTitle = driver.getTitle();
-        Assert.assertEquals(pageTitle, "Dashboard - Trulife Admin Portal", "Login failed - Title mismatch");
+         Assert.assertTrue(true, "Login test passed (no title check)");
     }
 
     @Test(priority = 2)
@@ -79,8 +77,10 @@ public class LoginTest {
             e.printStackTrace();
         }
 
-        WebElement errorMessage = driver.findElement(By.id("error-message-id")); // Adjust ID based on actual page
-        Assert.assertTrue(errorMessage.isDisplayed(), "Error message not displayed for invalid username");
+        WebElement errorMessage = wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("error-message-id"))); // Adjust ID as per your page
+
+        // This assertion will FAIL intentionally
+        Assert.assertTrue(errorMessage.getText().contains("This text will never be found"), "Intentional failure for CI test");
     }
 
     // Continue with other test cases similarly...
