@@ -19,19 +19,11 @@ jobs:
         with:
           distribution: 'temurin'
           java-version: '17'
-          cache: 'maven'
 
-      - name: Install Google Chrome
+      - name: Install Chrome
         run: |
           wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
           sudo apt install -y ./google-chrome-stable_current_amd64.deb
 
-      - name: Run tests and fail pipeline if any test fails
+      - name: Run Tests
         run: mvn test
-
-      - name: Upload TestNG Report
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: testng-report
-          path: test-output/
