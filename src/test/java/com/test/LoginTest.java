@@ -55,6 +55,33 @@ public class LoginTest {
 
          Assert.assertTrue(true, "Login test passed (no title check)");
     }
+     @Test(priority = 2)
+    public void testInvalidUsername() {
+        if (listener.shouldSkipTest()) {
+            throw new SkipException("Skipping test due to prior test failure.");
+        }
+
+        WebElement usernameField = driver.findElement(By.id("txtUsername"));
+        usernameField.sendKeys("invalidUser");
+
+        WebElement passwordField = driver.findElement(By.id("txtPassword"));
+        passwordField.sendKeys("12345678");
+
+        WebElement loginButton = driver.findElement(By.xpath("//button[@class='btn btn-primary']"));
+        loginButton.click();
+
+        try {
+            Thread.sleep(3000); // Replace with WebDriverWait
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        WebElement errorMessage = wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("error-message-id"))); // Adjust ID as per your page
+
+        // This assertion will FAIL intentionally
+        Assert.assertTrue(errorMessage.getText().contains("This text will never be found"), "Intentional failure for CI test");
+    }
+
    
     // Continue with other test cases similarly...
 
