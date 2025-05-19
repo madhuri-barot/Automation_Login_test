@@ -55,7 +55,6 @@ public class LoginTest {
 
          Assert.assertTrue(true, "Login test passed (no title check)");
     }
-
    
     // Continue with other test cases similarly...
 
