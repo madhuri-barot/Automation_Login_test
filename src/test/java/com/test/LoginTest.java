@@ -48,7 +48,7 @@ public class LoginTest {
 
     @Test(priority = 2)
     public void testInvalidLogin() {
-        driver.navigate().refresh();
+       WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
 
         WebElement username = wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("txtUsername")));
         WebElement password = driver.findElement(By.id("txtPassword"));
