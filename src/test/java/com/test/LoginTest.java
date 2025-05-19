@@ -46,24 +46,6 @@ public class LoginTest {
         Assert.assertTrue(driver.getCurrentUrl().contains("dashboard"), "Valid login succeeded");
     }
 
-    @Test(priority = 2)
-    public void testInvalidLogin() {
-       WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
-
-        WebElement username = wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("txtUsername")));
-        WebElement password = driver.findElement(By.id("txtPassword"));
-        WebElement loginBtn = driver.findElement(By.xpath("//button[@class='btn btn-primary']"));
-
-        username.clear();
-        username.sendKeys("invalidUser");
-        password.clear();
-        password.sendKeys("wrongpass");
-        loginBtn.click();
-
-        WebElement error = wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("error-message-id")));
-        Assert.assertTrue(error.getText().contains("This text will never be found"), "Intentional failure");
-    }
-
     @AfterClass
     public void tearDown() {
         if (driver != null) {
