@@ -26,23 +26,12 @@ jobs:
           wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
           sudo apt install -y ./google-chrome-stable_current_amd64.deb
 
-      - name: Run tests (do not fail build on test failures)
-        run: mvn test
-        continue-on-error: true
+      - name: Run tests
+        run: mvn clean test
 
       - name: Upload TestNG HTML Report
-        uses: actions/upload-artifact@v4
         if: always()
+        uses: actions/upload-artifact@v4
         with:
           name: testng-html-report
           path: test-output/**
-
-      - name: Fail job if tests failed
-        if: always()
-        run: |
-          if grep -q "<failure" target/surefire-reports/*.xml || grep -q "<error" target/surefire-reports/*.xml; then
-            echo "Some tests failed."
-            exit 1
-          else
-            echo "All tests passed."
-          fi
