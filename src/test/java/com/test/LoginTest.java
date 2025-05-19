@@ -25,7 +25,7 @@ public class LoginTest {
         options.addArguments("--disable-dev-shm-usage");
 
         driver = new ChromeDriver(options);
-        driver.get("https://your-login-url.com"); // <-- PUT YOUR ACTUAL LOGIN PAGE
+        driver.get("https://trulifeadminportal-uat.azurewebsites.net/login"); //
         wait = new WebDriverWait(driver, Duration.ofSeconds(10));
     }
 
