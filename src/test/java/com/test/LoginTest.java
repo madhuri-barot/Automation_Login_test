@@ -34,12 +34,6 @@ public class LoginTest {
         Assert.assertTrue(true, "Valid login test passed.");
     }
 
-    @Test(priority = 2)
-    public void testInvalidUsername() {
-        // This test always fails
-        Assert.fail("Intentional failure for pipeline testing.");
-    }
-
     @AfterClass
     public void tearDown() {
         if (driver != null) {
